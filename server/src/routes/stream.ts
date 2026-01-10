@@ -40,10 +40,10 @@ streamRouter.get('/stream', (req: Request, res: Response): void => {
                         ...sensor,
                     }
 
-                    const reading = await readDevice(fullDeviceConfig);
+                    const reading: IMeasurement = await readDevice(fullDeviceConfig);
                     if (!res.writableEnded && !res.socket?.destroyed) {
+                        reading.ts = roundToSeconds(reading.ts);
                         sendToClient(res, reading);
-
                         saveMeasurement(reading).catch(err => {
                             console.error(`Database write failed for sensor ${sensor.id}:`, err);
                         });
@@ -84,4 +84,8 @@ streamRouter.get('/stream', (req: Request, res: Response): void => {
 
 async function saveMeasurement(data: IMeasurement) {
     await prisma.measurement.create({ data });
+}
+
+function roundToSeconds(date: Date): Date {
+    return new Date(Math.floor(date.getTime() / 1000) * 1000);
 }
