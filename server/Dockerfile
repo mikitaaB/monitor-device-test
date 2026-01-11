@@ -33,6 +33,7 @@ FROM build-deps AS build
 COPY --chown=nodejs:nodejs . .
 
 RUN npm run build
+RUN npx prisma generate
 
 RUN chown -R nodejs:nodejs /app
 
@@ -76,4 +77,4 @@ COPY --from=build --chown=nodejs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 USER nodejs
 EXPOSE 3000
-CMD ["sh", "-c", "npm run db:deploy && npm run start"]
+CMD ["npm", "run", "start"]

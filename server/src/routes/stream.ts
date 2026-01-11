@@ -2,7 +2,7 @@ import { Router, type Request, type Response } from 'express';
 import { sendToClient } from '../services/broadcaster.js';
 import { readDevice } from '../services/modbus.js';
 import { config } from '../config/environment.js';
-import { prisma } from '../lib/prisma.js';
+import prisma from '../lib/prisma.js';
 import { IMeasurement } from '../interfaces/measurement.interface.js';
 
 export const streamRouter = Router();
