@@ -13,6 +13,7 @@ COPY package*.json ./
 COPY prisma ./prisma
 
 RUN npm ci --omit=dev && \
+    npx prisma generate && \
     npm cache clean --force
 
 RUN chown -R nodejs:nodejs /app
@@ -23,6 +24,7 @@ COPY package*.json ./
 COPY prisma ./prisma
 
 RUN npm ci --no-audit --no-fund && \
+    npx prisma generate && \
     npm cache clean --force
 
 RUN mkdir -p /app/node_modules/.vite && \
@@ -33,7 +35,6 @@ FROM build-deps AS build
 COPY --chown=nodejs:nodejs . .
 
 RUN npm run build
-RUN npx prisma generate
 
 RUN chown -R nodejs:nodejs /app
 
@@ -77,4 +78,4 @@ COPY --from=build --chown=nodejs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 USER nodejs
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run db:deploy && npm run start"]
