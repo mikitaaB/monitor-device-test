@@ -79,4 +79,4 @@ COPY --from=build --chown=nodejs:nodejs /app/generated ./generated
 
 USER nodejs
 EXPOSE 3000
-CMD ["sh", "-c", "npm run db:deploy && npm run start"]
+CMD ["sh", "-c", "echo '--- FILE STRUCTURE ---' && find /app -maxdepth 4 && npm run start"]
