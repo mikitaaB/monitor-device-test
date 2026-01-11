@@ -12,8 +12,7 @@ FROM base AS deps
 COPY package*.json ./
 COPY prisma ./prisma
 
-RUN --mount=type=cache,id=npm-deps,target=/root/.npm,sharing=locked \
-    npm ci --omit=dev && \
+RUN npm ci --omit=dev && \
     npm cache clean --force
 
 RUN chown -R nodejs:nodejs /app
@@ -23,8 +22,7 @@ FROM base AS build-deps
 COPY package*.json ./
 COPY prisma ./prisma
 
-RUN --mount=type=cache,id=npm-build,target=/root/.npm,sharing=locked \
-    npm ci --no-audit --no-fund && \
+RUN npm ci --no-audit --no-fund && \
     npm cache clean --force
 
 RUN mkdir -p /app/node_modules/.vite && \
