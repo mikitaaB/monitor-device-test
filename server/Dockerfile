@@ -75,6 +75,7 @@ COPY --from=deps --chown=nodejs:nodejs /app/package*.json ./
 COPY --from=build --chown=nodejs:nodejs /app/dist ./dist
 COPY --from=build --chown=nodejs:nodejs /app/prisma ./prisma
 COPY --from=build --chown=nodejs:nodejs /app/prisma.config.ts ./prisma.config.ts
+COPY --from=build --chown=nodejs:nodejs /app/generated ./generated
 
 USER nodejs
 EXPOSE 3000

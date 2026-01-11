@@ -28,7 +28,7 @@ export default function SensorCard({
 
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                     <Typography variant='h6' component='div'>
-                        Humidity: {humidity?.toFixed(1) ?? '-'}%RH`
+                        Humidity: {humidity?.toFixed(1) ?? '-'}%RH
                     </Typography>
                 </Box>
 
