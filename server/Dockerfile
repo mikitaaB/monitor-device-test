@@ -75,8 +75,8 @@ COPY --from=deps --chown=nodejs:nodejs /app/package*.json ./
 COPY --from=build --chown=nodejs:nodejs /app/dist ./dist
 COPY --from=build --chown=nodejs:nodejs /app/prisma ./prisma
 COPY --from=build --chown=nodejs:nodejs /app/prisma.config.ts ./prisma.config.ts
-COPY --from=build --chown=nodejs:nodejs /app/generated ./generated
+COPY --from=build --chown=nodejs:nodejs /app/generated ./dist/generated
 
 USER nodejs
 EXPOSE 3000
-CMD ["sh", "-c", "echo '--- FILE STRUCTURE ---' && find /app -maxdepth 4 && npm run start"]
+CMD ["sh", "-c", "npm run db:deploy && npm run start"]
