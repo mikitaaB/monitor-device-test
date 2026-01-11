@@ -26,7 +26,6 @@ services:
       - .env
     command: >
       sh -c "
-        npx prisma generate &&
         npx prisma db push --accept-data-loss &&
         npm run start
       "
@@ -63,7 +62,6 @@ services:
 
 volumes:
   pg_data:
-
 
 networks:
   app-network:

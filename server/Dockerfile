@@ -34,6 +34,7 @@ RUN mkdir -p /app/node_modules/.vite && \
 FROM build-deps AS build
 COPY --chown=nodejs:nodejs . .
 
+RUN npx prisma generate
 RUN npm run build
 
 RUN chown -R nodejs:nodejs /app
