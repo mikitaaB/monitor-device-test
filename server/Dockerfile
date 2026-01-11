@@ -32,7 +32,6 @@ RUN mkdir -p /app/node_modules/.vite && \
 FROM build-deps AS build
 COPY --chown=nodejs:nodejs . .
 
-RUN npx prisma generate
 RUN npm run build
 
 RUN chown -R nodejs:nodejs /app
@@ -77,4 +76,4 @@ COPY --from=build --chown=nodejs:nodejs /app/prisma.config.ts ./prisma.config.ts
 
 USER nodejs
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run db:deploy && npm run start"]
